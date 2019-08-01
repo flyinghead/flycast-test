@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./build.sh || echo "Build failed" || exit 1
+./build.sh master || echo "Build failed" || exit 1
 rm -rf screenshots
 rm -rf logs
 ./replay-test.sh dreamcast us ~/RetroPie/roms/dreamcast/Dreamcast/Games/NTSC-US/*.chd
@@ -27,4 +27,3 @@ aws s3 cp --acl public-read result-naomi.json s3://flycast-tests/$githash/
 aws s3 cp --acl public-read result-awave.json s3://flycast-tests/$githash/
 aws s3 cp --acl public-read --recursive logs/ s3://flycast-tests/$githash/logs/
 aws s3 cp --acl public-read --recursive screenshots/ s3://flycast-tests/$githash/screenshots/
-

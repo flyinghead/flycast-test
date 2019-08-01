@@ -13,6 +13,6 @@ do
 		echo Skipping $game \(existing script\)
 		continue
 	fi
-	./reicast_naomi.elf "RetroPie/roms/naomi/$game" -config record:record_input=yes
+	./reicast.elf "RetroPie/roms/naomi/$game" -config record:record_input=yes
 done < naomi-games.txt
 

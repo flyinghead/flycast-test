@@ -37,10 +37,10 @@ do
 	fi
 	echo Testing $gname
 	params=""
+	exe="reicast.elf"
 	if [ $SYSTEM == "dreamcast" ] ; then
 #		cp vmus/$gname.bin ~/.reicast/vmu_save_A1.bin
 		rm ~/.reicast/vmu_save_A1.bin
-		exe="reicast.elf"
 		if [ $REGION == "eu" ]; then
 			params="-config config:Dreamcast.Region=2 -config config:Dreamcast.Broadcast=1"
 		elif [ $REGION == "jp" ]; then
@@ -48,10 +48,6 @@ do
 		else
 			params="-config config:Dreamcast.Region=1 -config config:Dreamcast.Broadcast=0"
 		fi
-	elif [ $SYSTEM == "naomi" ] ; then
-		exe="reicast_naomi.elf"
-	else
-		exe="reicast_awave.elf"
 	fi
 	/usr/bin/time --quiet -f "%U" -o elapsed_time ./$exe "$game" \
 		-config record:replay_input=yes $params > "logs/$gname.log" 2>&1
