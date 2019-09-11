@@ -8,7 +8,6 @@ shift
 [ -d logs ] || mkdir -p logs
 [ -d screenshots ] || mkdir -p screenshots
 
-html=""
 json=""
 
 while (( "$#" ))
@@ -31,13 +30,13 @@ do
 	fi
 	if [ -f "screenshots/$gname.png" ] ; then
 		echo Skipping $gname \(existing screenshot\)
-		html+='<tr><td>'"$gname"'</td><td>OK</td><td><img src="screenshots/'"$gname"'.png"></td><td><a href="logs/'"$gname"'.log">Logs</a></td></tr>'
 		json+="{ \"name\": \"$gname\", \"status\": \"OK\", \"screenshot\": \"screenshots/$gname.png\", \"log\": \"logs/$gname.log\", \"system\": \"$SYSTEM\", \"region\": \"$REGION\" }"
 		continue;
 	fi
 	echo Testing $gname
 	params=""
 	exe="reicast.elf"
+	if [ -f "options/$gname" ]; then options=`cat "options/$gname"`; else options=""; fi
 	if [ $SYSTEM == "dreamcast" ] ; then
 #		cp vmus/$gname.bin ~/.reicast/vmu_save_A1.bin
 		rm ~/.reicast/vmu_save_A1.bin
@@ -50,27 +49,19 @@ do
 		fi
 	fi
 	/usr/bin/time --quiet -f "%U" -o elapsed_time ./$exe "$game" \
-		-config record:replay_input=yes $params > "logs/$gname.log" 2>&1
-	html+='<tr><td>'"$gname"'</td><td>'
+		-config record:replay_input=yes $params $options > "logs/$gname.log" 2>&1
 	elapsed_time=`cat elapsed_time|tail -1`
 	json+="{ \"name\": \"$gname\", \"duration\": \"$elapsed_time\", \"status\": "
 	if [ $? == 0 -a -f screenshot.png ] ; then
 		mv screenshot.png "screenshots/$gname.png"
 		echo 'Success'
-		html+='OK</td><td><img src="screenshots/'"$gname"'.png">'
 		json+="\"OK\",  \"screenshot\": \"screenshots/$gname.png\""
 	else
 		echo '*** Failure ***'
-		html+='FAIL</td><td><img src="fail.jpg">'
 		json+="\"FAIL\",  \"screenshot\": \"fail.jpg\""
 	fi
-	html+='</td><td><a href="logs/'"$gname"'.log">Logs</a></td></tr>'
 	json+=", \"log\": \"logs/$gname.log\", \"system\": \"$SYSTEM\", \"region\": \"$REGION\" }"
 done
-
-echo '<html><body><table><tr><th>Game</th><th>Status</th><th>Screenshot</th><tr>' > result-$REGION.html
-echo "$html" >> result-$REGION.html
-echo '</table></body></html>' >> result-$REGION.html 
 
 echo "[" > result-$REGION.json
 echo "$json" >> result-$REGION.json

@@ -13,6 +13,7 @@ do
 		echo Skipping $game \(existing script\)
 		continue
 	fi
-	./reicast.elf "RetroPie/roms/naomi/$game" -config record:record_input=yes
+	if [ -f "options/$gname" ]; then options=`cat "options/$gname"`; else options=""; fi
+	./reicast.elf "RetroPie/roms/naomi/$game" -config record:record_input=yes $options
 done < naomi-games.txt
 
