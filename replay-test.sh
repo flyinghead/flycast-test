@@ -35,11 +35,10 @@ do
 	fi
 	echo Testing $gname
 	params=""
-	exe="reicast.elf"
+	exe="flycast.elf"
 	if [ -f "options/$gname" ]; then options=`cat "options/$gname"`; else options=""; fi
 	if [ $SYSTEM == "dreamcast" ] ; then
-#		cp vmus/$gname.bin ~/.reicast/vmu_save_A1.bin
-		rm ~/.reicast/vmu_save_A1.bin
+		rm ~/.local/share/flycast/vmu_save_A1.bin
 		if [ $REGION == "eu" ]; then
 			params="-config config:Dreamcast.Region=2 -config config:Dreamcast.Broadcast=1"
 		elif [ $REGION == "jp" ]; then

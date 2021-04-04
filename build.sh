@@ -8,5 +8,5 @@ git checkout $1
 git pull
 make TEST_AUTOMATION=1 clean
 make TEST_AUTOMATION=1 -j8
-mv -f reicast.elf ../../..
+mv -f flycast.elf ../../..
 cd ../../..

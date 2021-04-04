@@ -14,6 +14,6 @@ do
 		continue
 	fi
 	if [ -f "options/$gname" ]; then options=`cat "options/$gname"`; else options=""; fi
-	./reicast.elf "RetroPie/roms/naomi/$game" -config record:record_input=yes $options
+	./flycast.elf "RetroPie/roms/naomi/$game" -config record:record_input=yes $options
 done < atomiswave-games.txt
 

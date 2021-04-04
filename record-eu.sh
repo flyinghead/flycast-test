@@ -11,10 +11,8 @@ do
 		continue
 	fi
 	if [ -f "options/$gname" ]; then options=`cat "options/$gname"`; else options=""; fi
-#	cp vmus/$gname.bin ~/.reicast/vmu_save_A1.bin
-	rm ~/.reicast/vmu_save_A1.bin
-	./reicast.elf "$game" -config record:record_input=yes -config config:Dreamcast.Region=2 \
+	rm ~/.local/share/flycast/vmu_save_A1.bin
+	./flycast.elf "$game" -config record:record_input=yes -config config:Dreamcast.Region=2 \
 		-config config:Dreamcast.Broadcast=1 $options
-	mv ~/.reicast/vmu_save_A1.bin "vmus/$gname.bin"
 done
 
