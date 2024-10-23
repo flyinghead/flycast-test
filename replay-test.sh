@@ -17,6 +17,7 @@ do
 	gname=`basename "$game" .chd`
 	gname=`basename "$gname" .zip`
 	gname=`basename "$gname" .cdi`
+	gname=`basename "$gname" .gdi`
         if [[ "$gname" =~ ^.*\(Disc\ [2-4]\ of.*$ ]] ; then
                 echo Skipping multiple discs $gname
                 continue;
@@ -34,17 +35,17 @@ do
 		continue;
 	fi
 	echo Testing $gname
-	params=""
+	params="-config config:rend.vsync=no"
 	exe="flycast.elf"
 	if [ -f "options/$gname" ]; then options=`cat "options/$gname"`; else options=""; fi
 	if [ $SYSTEM == "dreamcast" ] ; then
 		rm ~/.local/share/flycast/vmu_save_A1.bin
 		if [ $REGION == "eu" ]; then
-			params="-config config:Dreamcast.Region=2 -config config:Dreamcast.Broadcast=1"
+			params+=" -config config:Dreamcast.Region=2 -config config:Dreamcast.Broadcast=1"
 		elif [ $REGION == "jp" ]; then
-			params="-config config:Dreamcast.Region=0 -config config:Dreamcast.Broadcast=0"
+			params+=" -config config:Dreamcast.Region=0 -config config:Dreamcast.Broadcast=0"
 		else
-			params="-config config:Dreamcast.Region=1 -config config:Dreamcast.Broadcast=0"
+			params+=" -config config:Dreamcast.Region=1 -config config:Dreamcast.Broadcast=0"
 		fi
 	fi
 	/usr/bin/time --quiet -f "%U" -o elapsed_time ./$exe "$game" \

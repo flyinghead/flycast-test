@@ -28,8 +28,8 @@ cspike.zip
 cvs2mf.zip
 cvs2.zip
 cvsgd.zip
+deathcoxj.zip
 deathcoxo.zip
-deathcox.zip
 derbyo2k.zip
 derbyoc2.zip
 derbyocw.zip
